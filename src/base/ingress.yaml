@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  defaultBackend:
+    serviceName: dev-example-svc
+    servicePort: 80
+  rules:
+  - host: test.devsecol.site
+    http:
+      paths:
+      - path: /test
+        pathType: Prefix
+        backend:
+          service:
+            name: test-example-svc
+            port:
+              number: 80
+  - http:
+      paths:
+      - path: /dev
+        pathType: Prefix
+        backend:
+          service:
+            name: dev-example-svc
+            port:
+              number: 80

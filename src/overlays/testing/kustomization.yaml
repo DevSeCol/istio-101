@@ -1,0 +1,5 @@
+bases:
+- ../../base
+namePrefix: test-
+patchesStrategicMerge:
+- deployment-replicas.yaml
