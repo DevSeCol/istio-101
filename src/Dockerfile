@@ -1,4 +1,4 @@
-FROM example:1.19-alpine
+FROM nginx:1.19-alpine
 ARG ENVIRONMENT=dev
 ARG GITHUB_SHA=1234
 COPY ./assets  /usr/share/example/html
