@@ -1,5 +1,7 @@
 bases:
 - ../../base
 namePrefix: test-
+commonLabels:
+  app: testing
 patchesStrategicMerge:
 - deployment-replicas.yaml
