@@ -1,7 +1,6 @@
 resources:
 - deployment.yaml
 - service.yaml
-- ingress.yaml
 namespace: lab
 images:
 - name: example
