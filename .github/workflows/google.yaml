@@ -113,6 +113,7 @@ jobs:
 
     - name: Deploy Development
       run: |
+        kubectl apply -f base/namespace.yaml # Workaround for Kustomize < v3.8.2 # https://github.com/kubernetes-sigs/kustomize/issues/235
         kubectl apply -k overlays/development
         echo "================"
         echo "Deployment and services status in the Development environment:"

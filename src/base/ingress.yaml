@@ -6,7 +6,12 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  defaultBackend:
+  # Kubernetes 1.18
+  # defaultBackend: 
+  #   service:
+  #     name: dev-example-svc
+  #     port: 80
+  backend: 
     serviceName: dev-example-svc
     servicePort: 80
   rules:
