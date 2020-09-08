@@ -3,7 +3,7 @@ resource "google_container_cluster" "primary-cluster" {
   location                 = var.region
   remove_default_node_pool = true
   initial_node_count       = 1
-  min_master_version       = "1.17.9-gke.1503"
+  min_master_version       = "1.16.13-gke.1"
   #network                  = var.cluster_network
   #subnetwork               = var.cluster_subnetwork
 }
