@@ -115,7 +115,7 @@ jobs:
     # Testing deployment
     - name: Update testing container image
       run: |
-        ../kustomize edit set image example=$REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE-testing:${GITHUB_SHA}
+        ../kustomize edit set image nginx=$REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE-testing:${GITHUB_SHA}
         cat kustomization.yaml
       working-directory: ./src/base
 
