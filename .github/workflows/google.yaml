@@ -28,7 +28,7 @@ env:
   GKE_CLUSTER: ingress-cluster
   NAMESPACE: lab
   IMAGE: example-app
-  DEPLOYMENT_NAME: example-deployment
+  WORKLOAD_NAME: example
   REGISTRY_HOSTNAME: gcr.io
 
 jobs:
@@ -76,18 +76,6 @@ jobs:
       run: |
         docker push $REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE-development:$GITHUB_SHA
         docker push $REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE-testing:$GITHUB_SHA
-
-    # Deploy the Docker image to the GKE cluster
-    #- name: Deploy
-    #  run: |
-    #    gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
-    #    kubens $GKE_NAMESPACE
-    #    kubectl apply -f deployment.yaml
-    #    echo DEBUG: kubectl set image deployment/test-deploy example-container=$REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE:${GITHUB_SHA}
-    #    kubectl set image deployment/test-deploy example-container=$REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE:${GITHUB_SHA}
-    #    kubectl get pods
-    #    #kubectl rollout status deployment/$DEPLOYMENT_NAME
-    #    #kubectl get services -o wide
         
     # Set up kustomize binary to be able to use the "kustomize edit" command to change the image
     - name: Install Kustomize
@@ -107,6 +95,7 @@ jobs:
     # Development deployment
     - name: Update base container image
       run: |
+        # kubectl set image deployment/test-deploy example-container=$REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE:${GITHUB_SHA}
         ../kustomize edit set image example=$REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE-development:${GITHUB_SHA}
         cat kustomization.yaml
       working-directory: ./src/base
@@ -120,7 +109,7 @@ jobs:
         kubectl apply -k overlays/development
         echo "================"
         echo "Deployment and services status in the Development environment:"
-        kubectl rollout status deployment/$DEPLOYMENT_NAME -n $NAMESPACE
+        kubectl rollout status deployment/$WORKLOAD_NAME -n $NAMESPACE
         kubectl get services -o wide -n $NAMESPACE
 
     # Testing deployment
@@ -135,5 +124,5 @@ jobs:
         kubectl apply -k overlays/testing
         echo "================"
         echo "Deployment and services status in the Testing environment:"
-        kubectl rollout status deployment/$DEPLOYMENT_NAME -n $NAMESPACE
+        kubectl rollout status deployment/test-$WORKLOAD_NAME -n $NAMESPACE
         kubectl get services -o wide -n $NAMESPACE
