@@ -1,4 +1,3 @@
-#apiVersion: networking.k8s.io/v1  # Kubernetes 1.18
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
@@ -18,19 +17,31 @@ spec:
   - host: test.devsecol.site
     http:
       paths:
-      - path: /test
-        pathType: Prefix
+      - path: /test/*
         backend:
-          service:
-            name: test-example-svc
-            port:
-              number: 80
+          serviceName: test-example-svc
+          servicePort: 80
   - http:
       paths:
-      - path: /dev
-        pathType: Prefix
+      - path: /dev/*
         backend:
-          service:
-            name: dev-example-svc
-            port:
-              number: 80
+          serviceName: dev-example-svc
+          servicePort: 80
+
+# Changes for Kubernetes 1.18
+# apiVersion: networking.k8s.io/v1
+# spec:
+#  defaultBackend: 
+#    service:
+#      name: dev-example-svc
+#      port: 80
+#  rules:
+#  - http:
+#      paths:
+#      - path: /dev
+#        pathType: Prefix
+#        backend:
+#          service:
+#            name: dev-example-svc
+#            port:
+#              number: 80
