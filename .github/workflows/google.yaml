@@ -63,11 +63,11 @@ jobs:
     - name: Build
       run: |        
         docker build -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$IMAGE"-development:"$GITHUB_SHA" \
-          --build-arg ENVIRONMENT="Development" \
+          --build-arg ENVIRONMENT="dev" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" .
         docker build -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$IMAGE"-testing:"$GITHUB_SHA" \
-          --build-arg ENVIRONMENT="Testing" \
+          --build-arg ENVIRONMENT="test" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" .
 
@@ -96,7 +96,7 @@ jobs:
     - name: Update base container image
       run: |
         # kubectl set image deployment/test-deploy example-container=$REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE:${GITHUB_SHA}
-        ../kustomize edit set image example=$REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE-development:${GITHUB_SHA}
+        ../kustomize edit set image nginx=$REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE-development:${GITHUB_SHA}
         cat kustomization.yaml
       working-directory: ./src/base
 
