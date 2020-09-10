@@ -29,7 +29,7 @@ resource "google_container_node_pool" "primary-pool" {
     metadata = {
       disable-legacy-endpoints = "true"
     }
-
+    # permisos
     oauth_scopes = [
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
