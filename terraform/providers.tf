@@ -9,11 +9,11 @@ terraform {
   }
 }
 
-provider "google" {
-  project = var.project_id
-  region  = var.region
-  zone    = "${var.region}-b"
-}
+# provider "google" {
+#   project = var.project_id
+#   region  = var.region
+#   zone    = "${var.region}-b"
+# }
 
 # Required for Istio addon
 provider "google-beta" {
