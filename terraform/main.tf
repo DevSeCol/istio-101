@@ -1,9 +1,9 @@
 resource "google_container_cluster" "primary-cluster" {
   name                     = "cluster-istio"
-  location                 = var.region
+  location                 = "${var.region}-a"
   remove_default_node_pool = true
   initial_node_count       = 1
-  min_master_version       = "1.16.13-gke.1"
+  min_master_version       = "1.17.9-gke.1504"
   #network                  = var.cluster_network
   #subnetwork               = var.cluster_subnetwork
 }
@@ -12,7 +12,11 @@ resource "google_container_node_pool" "primary-pool" {
   name       = "primary-pool"
   location   = google_container_cluster.primary-cluster.location
   cluster    = google_container_cluster.primary-cluster.name
-  node_count = 1
+  node_count = 3
+
+  istio_config {
+    disabled = false
+  }
 
   node_config {
     preemptible  = true
