@@ -8,9 +8,12 @@ resource "google_container_cluster" "primary-cluster" {
   #subnetwork               = var.cluster_subnetwork
 
   addons_config {
+
+    # Enabling Istio addon
     istio_config {
       disabled = false
     }
+
   }
 
 }

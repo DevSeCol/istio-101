@@ -14,3 +14,10 @@ provider "google" {
   region  = var.region
   zone    = "${var.region}-b"
 }
+
+# Required for Istio addon
+provider "google-beta" {
+  project = var.project_id
+  region  = var.region
+  zone    = "${var.region}-b"
+}
