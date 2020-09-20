@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: backend-destination
+spec:
+  host: nginx-svc
+  subsets:
+  - name: single
+    labels:
+      version: "v1.10"
+  - name: multiple
+    labels:
+      version: "v1.19"
