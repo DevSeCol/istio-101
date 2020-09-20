@@ -1,5 +1,5 @@
 resource "google_container_cluster" "primary-cluster" {
-  provider = "google-beta"
+  provider                 = "google-beta"
   name                     = "cluster-istio"
   location                 = "${var.region}-a"
   remove_default_node_pool = true
