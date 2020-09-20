@@ -1,5 +1,5 @@
 resource "google_container_cluster" "primary-cluster" {
-  name                     = "ingress-cluster-harley"
+  name                     = "cluster-istio"
   location                 = var.region
   remove_default_node_pool = true
   initial_node_count       = 1
