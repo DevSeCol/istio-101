@@ -1,4 +1,5 @@
 resource "google_container_cluster" "primary-cluster" {
+  provider = "google-beta"
   name                     = "cluster-istio"
   location                 = "${var.region}-a"
   remove_default_node_pool = true
@@ -7,13 +8,15 @@ resource "google_container_cluster" "primary-cluster" {
   #network                  = var.cluster_network
   #subnetwork               = var.cluster_subnetwork
 
-  addons_config {
+  network_policy {
+    enabled = true
+  }
 
+  addons_config {
     # Enabling Istio addon
     istio_config {
       disabled = false
     }
-
   }
 
 }
