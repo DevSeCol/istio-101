@@ -34,7 +34,7 @@ resource "google_container_node_pool" "primary-pool" {
     #service_account = var.service_account
 
     labels = {
-      machine-type = "preemtible"
+      machine-type = preemtible
     }
 
     tags = ["spark-cluster"]
